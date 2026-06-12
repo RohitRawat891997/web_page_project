@@ -1,0 +1,39 @@
+# Trigger Test-1
+name: Enterprise DevSecOps CICD Pipeline
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - html/**
+      - .github/workflows/*
+
+################################
+# What this step does
+  #Runs a Gitleaks container.
+  #Scans the repository for:
+    # AWS keys
+    # GitHub tokens
+    # Passwords
+    # API keys
+    # Other secrets
+###############################
+  
+jobs:
+  gitleaks-scan:
+    name: Gitleaks Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Run Gitleaks Scan
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/repo" \
+            zricethezav/gitleaks:latest detect \
+            --source=/repo \
+            --report-format=json \
+            --report-path=/repo/gitleaks-report.json \      # creates a report file gitleaks-report.json
+            --redact \                                      # Masks detected secrets using:
+            --exit-code 1                                   # Fails the pipeline if a secret is found:
