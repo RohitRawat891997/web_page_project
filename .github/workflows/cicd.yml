@@ -1,0 +1,173 @@
+# Trigger Test-1
+name: Enterprise DevSecOps CICD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'html/**'
+      - '.github/workflows/cicd.yml'
+
+jobs:
+  gitleaks-scan:
+    name: Gitleaks Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Run Gitleaks Scan
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/repo" \
+            zricethezav/gitleaks:latest detect \
+            --source=/repo \
+            --report-format=json \
+            --report-path=/repo/gitleaks-report.json \
+            --redact \
+            --exit-code=1
+
+      - name: Upload Gitleaks Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitleaks-report
+          path: gitleaks-report.json
+          if-no-files-found: warn
+
+  checkov-terraform:
+    name: Checkov Terraform Scan
+    runs-on: ubuntu-latest
+    needs: gitleaks-scan
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Checkov
+        run: pip install checkov
+
+      - name: Run Checkov Terraform Scan
+        run: |
+          checkov -d . \
+            --framework terraform \
+            --output json \
+            --output-file-path checkov-terraform-report.json
+
+      - name: Upload Checkov Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: checkov-terraform-repor
+          path: checkov-terraform-report.json
+          if-no-files-found: warn
+
+  checkov-k8s:
+    name: Checkov Kubernetes Scan
+    runs-on: ubuntu-latest
+    needs: gitleaks-scan
+    
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          
+      - name: Install Checkov
+        run: pip install checkov
+        
+      - name: Run Checkov Kubernetes scan
+        run: |
+          checkov -d . \
+            --framework kubernetes \
+            --output json \
+            --output-file-path checkov-k8s-report.json
+            
+      - name: Upload Checkov Kubernetes report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: checkov-k8s-report
+          path: checkov-k8s-report.json
+          if-no-files-found: warn
+
+  checkov-dockerfile:
+    name: Checkov Dockerfile Scan
+    runs-on: ubuntu-latest
+    needs: gitleaks-scan
+    
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          
+      - name: Install Checkov
+        run: pip install checkov
+        
+      - name: Run Checkov Dockerfile scan
+        run: |
+          checkov -d . \
+            --framework dockerfile \
+            --output json \
+            --output-file-path checkov-dockerfile-report.json 
+            
+      - name: Upload Checkov Dockerfile report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: checkov-dockerfile-report
+          path: checkov-dockerfile-report.json
+          if-no-files-found: warn
+
+  http-trivy-fs:
+    name: http Trivy FS Scan
+    runs-on: ubuntu-latest
+    needs: gitleaks-scan
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Install Trivy
+        uses: aquasecurity/setup-trivy@v0.2.6
+        with:
+          version: latest
+          cache: true
+
+      - name: Verify Trivy installation
+        run: |
+          trivy --version
+          which trivy
+      
+      - name: Run Trivy FS scan on client (TABLE)
+        run: |
+          trivy fs ./client \
+            --format table \
+            --severity HIGH,CRITICAL \
+            --ignore-unfixed \
+            --exit-code 1 > client-trivy-fs-report.txt
+
+      - name: Upload Client Trivy TABLE report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: client-trivy-fs-table-report
+          path: client-trivy-fs-report.txt
+          if-no-files-found: warn
+
+
+          
