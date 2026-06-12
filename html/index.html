@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure Awaits - Travel Website</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-plane"></i>
+                <span>Adventure Awaits</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#destinations">Destinations</a></li>
+                <li><a href="#packages">Packages</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><button class="login-btn" onclick="openLoginModal()">Login</button></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Adventure Awaits</h1>
+            <p>Discover amazing destinations and create unforgettable memories</p>
+            <button class="cta-btn" onclick="openBookingModal()">Book Your Adventure</button>
+        </div>
+    </section>
+
+    <!-- Destinations Section -->
+    <section id="destinations" class="destinations">
+        <div class="container">
+            <h2>Popular Destinations</h2>
+            <div class="destination-grid">
+                <div class="destination-card">
+                    <img src="https://media.istockphoto.com/id/1498516775/photo/the-eiffel-tower-in-paris-france-at-sunset.jpg?s=612x612&w=0&k=20&c=V4StdESr6-QQWOjXm6R8b1T-_slWLxasMnN6SWdV9ko=" alt="Paris">
+                    <div class="card-content">
+                        <h3>Paris, France</h3>
+                        <p>The city of love and lights</p>
+                        <span class="price">From $1,299</span>
+                        <button class="book-btn" onclick="openBookingModal('Paris')">Book Now</button>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <img src="https://img.freepik.com/free-photo/bali-pagoda-indonesia_1150-11021.jpg" alt="Bali">
+                    <div class="card-content">
+                        <h3>Bali, Indonesia</h3>
+                        <p>Tropical paradise awaits</p>
+                        <span class="price">From $899</span>
+                        <button class="book-btn" onclick="openBookingModal('Bali')">Book Now</button>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <img src="https://media.istockphoto.com/id/1390815938/photo/tokyo-city-in-japan.jpg?s=612x612&w=0&k=20&c=VHiC3TlbXkb-Yf6WUYjh825Y0nGMCTkNUa9j8X8rVfY=" alt="Tokyo">
+                    <div class="card-content">
+                        <h3>Tokyo, Japan</h3>
+                        <p>Where tradition meets modernity</p>
+                        <span class="price">From $1,599</span>
+                        <button class="book-btn" onclick="openBookingModal('Tokyo')">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="packages" class="packages">
+        <div class="container">
+            <h2>Travel Packages</h2>
+            <div class="package-grid">
+                <div class="package-card">
+                    <h3>Weekend Getaway</h3>
+                    <div class="package-price">$499</div>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 2 nights accommodation</li>
+                        <li><i class="fas fa-check"></i> Breakfast included</li>
+                        <li><i class="fas fa-check"></i> Airport transfers</li>
+                        <li><i class="fas fa-check"></i> City tour</li>
+                    </ul>
+                    <button class="package-btn" onclick="openBookingModal('Weekend Getaway')">Choose Package</button>
+                </div>
+                <div class="package-card featured">
+                    <div class="popular-tag">Most Popular</div>
+                    <h3>Adventure Week</h3>
+                    <div class="package-price">$1,299</div>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 7 nights accommodation</li>
+                        <li><i class="fas fa-check"></i> All meals included</li>
+                        <li><i class="fas fa-check"></i> Adventure activities</li>
+                        <li><i class="fas fa-check"></i> Professional guide</li>
+                        <li><i class="fas fa-check"></i> Travel insurance</li>
+                    </ul>
+                    <button class="package-btn" onclick="openBookingModal('Adventure Week')">Choose Package</button>
+                </div>
+                <div class="package-card">
+                    <h3>Luxury Escape</h3>
+                    <div class="package-price">$2,499</div>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 5 nights luxury resort</li>
+                        <li><i class="fas fa-check"></i> Premium dining</li>
+                        <li><i class="fas fa-check"></i> Spa treatments</li>
+                        <li><i class="fas fa-check"></i> Private transfers</li>
+                        <li><i class="fas fa-check"></i> Concierge service</li>
+                    </ul>
+                    <button class="package-btn" onclick="openBookingModal('Luxury Escape')">Choose Package</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+91 9665054119</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>info@adventureawaits.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>123 Travel Street, Adventure City, Nagpur</span>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Your Message" rows="5" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Adventure Awaits</h3>
+                    <p>Your trusted travel companion for unforgettable adventures around the world.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#destinations">Destinations</a></li>
+                        <li><a href="#packages">Packages</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Adventure Awaits. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" onclick="switchToSignup()">Sign up</a></p>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeBookingModal()">&times;</span>
+            <h2>Book Your Trip</h2>
+            <form id="bookingForm">
+                <input type="text" id="bookingDestination" placeholder="Destination" readonly>
+                <input type="text" id="bookingName" placeholder="Full Name" required>
+                <input type="email" id="bookingEmail" placeholder="Email" required>
+                <input type="tel" id="bookingPhone" placeholder="Phone Number" required>
+                <input type="date" id="bookingDate" required>
+                <select id="bookingGuests" required>
+                    <option value="">Number of Guests</option>
+                    <option value="1">1 Guest</option>
+                    <option value="2">2 Guests</option>
+                    <option value="3">3 Guests</option>
+                    <option value="4">4+ Guests</option>
+                </select>
+                <textarea id="bookingMessage" placeholder="Special Requirements" rows="3"></textarea>
+                <button type="submit">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
