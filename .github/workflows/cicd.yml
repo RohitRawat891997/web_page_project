@@ -155,7 +155,7 @@ jobs:
       
       - name: Run Trivy FS scan on client (TABLE)
         run: |
-          trivy fs ./client \
+          trivy fs ./html \
             --format table \
             --severity HIGH,CRITICAL \
             --ignore-unfixed \
