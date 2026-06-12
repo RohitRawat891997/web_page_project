@@ -34,6 +34,6 @@ jobs:
             zricethezav/gitleaks:latest detect \
             --source=/repo \
             --report-format=json \
-            --report-path=/repo/gitleaks-report.json \      # creates a report file gitleaks-report.json
-            --redact \                                      # Masks detected secrets using:
-            --exit-code 1                                   # Fails the pipeline if a secret is found:
+            --report-path=/repo/gitleaks-report.json \
+            --redact \
+            --exit-code=1
